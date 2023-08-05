@@ -17,6 +17,25 @@ const PasswordGenerator = () => {
   const [specialCharsChecked, setSpecialCharsChecked] = useState(true);
   const [copyButtonText, setCopyButtonText] = useState('Copy');
 
+  //password strength logic
+  const getPasswordStrength = (password: string): 'Weak' | 'Medium' | 'Hard' => {
+    const hasUppercase = /[A-Z]/.test(password);
+    const hasLowercase = /[a-z]/.test(password);
+    const hasNumber = /\d/.test(password);
+    const hasSpecialChar = /[!@#$%^&*()_+~`|}{\[\]:;<>,./\-='"]/.test(password);
+  
+    const fieldsPresent = [hasUppercase, hasLowercase, hasNumber, hasSpecialChar].filter(Boolean).length;
+  
+    if (fieldsPresent === 4) {
+      return 'Hard';
+    } else if (fieldsPresent === 3 || fieldsPresent === 2) {
+      return 'Medium';
+    } else {
+      return 'Weak';
+    }
+  };
+  const passwordStrength = getPasswordStrength(randomPassword);
+
   //event handler for copy button text 
   const handleCopy = () => {
     // Copy the password to the clipboard
@@ -136,9 +155,9 @@ const PasswordGenerator = () => {
         </div>
         <button className="copy-btn" onClick={handleCopy}>
           <Copy /> {copyButtonText}
-        </button>
+        </button> 
       </div>
-      <span className="fw-500">Weak</span>
+      <span className={`password-strength ${passwordStrength.toLowerCase()}`} /* className="fw-500" */>{passwordStrength}</span>
       <div className="slider">
         <div>
           <label id="slider-label">Password Length: </label>

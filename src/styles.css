@@ -63,6 +63,18 @@ body {
   color: var(--danger-color);
 }
 
+.password-strength.weak {
+  color: var(--danger-color);
+}
+
+.password-strength.medium {
+  color: var(--warning-color);
+}
+
+.password-strength.hard {
+  color: var(--success-color);
+}
+
 .flx {
   display: flex;
   flex-direction: row;
