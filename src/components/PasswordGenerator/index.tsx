@@ -15,6 +15,19 @@ const PasswordGenerator = () => {
   const [lowercaseChecked, setLowercaseChecked] = useState(false);
   const [numbersChecked, setNumbersChecked] = useState(false);
   const [specialCharsChecked, setSpecialCharsChecked] = useState(true);
+  const [copyButtonText, setCopyButtonText] = useState('Copy');
+
+  //event handler for copy button text 
+  const handleCopy = () => {
+    // Copy the password to the clipboard
+    navigator.clipboard.writeText(randomPassword);
+
+    // Change the copy button text temporarily to 'Copied' for 1 second
+    setCopyButtonText('Copied');
+    setTimeout(() => {
+      setCopyButtonText('Copy');
+    }, 1000);
+  };
 
   console.log("first", uppercaseChecked, lowercaseChecked, numbersChecked, specialCharsChecked);
   if (!uppercaseChecked && !lowercaseChecked && !numbersChecked && !specialCharsChecked) {
@@ -121,8 +134,8 @@ const PasswordGenerator = () => {
           <Refresh />
           </button>
         </div>
-        <button className="copy-btn">
-          <Copy /> Copy
+        <button className="copy-btn" onClick={handleCopy}>
+          <Copy /> {copyButtonText}
         </button>
       </div>
       <span className="fw-500">Weak</span>
